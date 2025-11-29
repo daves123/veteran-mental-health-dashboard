@@ -128,13 +128,6 @@ streamlit run streamlit_app.py --server.port 8502
 **Issue:** Charts not displaying  
 **Solution:** Ensure you have a modern browser (Chrome, Firefox, Safari, or Edge)
 
-## Support & Contact
-
-For questions about this project:
-- **Course:** CS 7510 - Communication and Presentation for Data Science
-- **Instructor:** [Your Instructor's Name]
-- **Semester:** Fall 2025
-
 ## Acknowledgments
 
 - **Data Source:** Centers for Disease Control and Prevention (CDC), Behavioral Risk Factor Surveillance System (BRFSS) 2024
@@ -146,5 +139,3 @@ For questions about this project:
 This project is created for educational purposes as part of CS 7510 coursework.
 
 ---
-
-**Note:** This dashboard is part of the Phase 2 Intermediate Report submission. For complete analysis details, statistical methods, and model development, please refer to the accompanying Jupyter notebook and written report.
