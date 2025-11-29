@@ -99,25 +99,18 @@ All charts use Plotly for interactive visualizations, providing:
 
 ## Deployment
 
-### Local Deployment
-Follow the installation steps above.
+### Run Locally
+```bash
+streamlit run streamlit_app.py
+```
 
 ### Cloud Deployment Options
 
-#### Streamlit Cloud (Recommended)
+#### Streamlit Cloud
 1. Push your code to GitHub
 2. Go to https://share.streamlit.io/
 3. Connect your GitHub repository
 4. Deploy!
-
-#### Heroku
-```bash
-heroku create your-app-name
-git push heroku main
-```
-
-#### AWS/Azure/GCP
-Consult respective platform documentation for Python web app deployment.
 
 ## Troubleshooting
 
