@@ -1,6 +1,6 @@
 """
 Female Veterans Mental Health Analysis - Enhanced Dashboard with Gender Filtering
-CS 7510 - Phase 2 Demonstration App
+Phase 2 Demonstration App
 Author: Dave Singh
 Dataset: BRFSS 2024 (CDC)
 """
