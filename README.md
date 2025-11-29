@@ -12,11 +12,11 @@ This interactive dashboard presents findings from the analysis of mental health 
 
 The dashboard includes five main sections:
 
-1. **📊 Overview** - Executive summary with key metrics and distributions
-2. **🗺️ Geographic Analysis** - State-level mental health burden analysis
-3. **💡 Key Insights** - Risk factors and protective factors analysis
-4. **🔮 Predictive Modeling** - Machine learning model performance and feature importance
-5. **📈 Recommendations** - Evidence-based policy recommendations
+1. **Overview** - Executive summary with key metrics and distributions
+2. **Geographic Analysis** - State-level mental health burden analysis
+3. **Key Insights** - Risk factors and protective factors analysis
+4. **Predictive Modeling** - Machine learning model performance and feature importance
+5. **Recommendations** - Evidence-based policy recommendations
 
 ## Installation & Setup
 
