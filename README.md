@@ -4,7 +4,7 @@
 This interactive dashboard presents findings from the analysis of mental health disparities among female veterans using BRFSS 2024 data.
 
 **Author:** Dave Singh  
-**Course:** CS 7510 - Communication and Presentation for Data Science  
+**Course:** Communication and Presentation for Data Science  
 **Semester:** Fall 2025  
 **Dataset:** BRFSS 2024 (~6,000 female veterans)
 
