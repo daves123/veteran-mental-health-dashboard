@@ -1258,6 +1258,16 @@ elif page == "🔍 Interactive Explorer":
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
                 category_orders=category_order,
             )
+        # Update hover template to remove underscores
+        fig.update_traces(
+            hovertemplate="<br>".join(
+                [
+                    f"{clean_label(x_var)}: %{{x}}",
+                    f"{clean_label(y_var)}: %{{y:.2f}}",
+                    "<extra></extra>",
+                ]
+            )
+        )
     # Create Histogram with optional gender split
     else:
         # For the histogram we use the selected X variable
@@ -1289,7 +1299,7 @@ elif page == "🔍 Interactive Explorer":
             # enforce sorting like other charts
             category_orders=category_order,
         )
-
+    # Apply layout and hover customization AFTER all chart types
     if chart_type == "Histogram":
         # Histogram: x = category/value (hist_col), y = count
         fig.update_layout(
@@ -1298,17 +1308,25 @@ elif page == "🔍 Interactive Explorer":
             height=600,
             hovermode="closest",
         )
-
-        # Only customize hover for histogram bars, leave marginal box alone
+    # Apply hover customization for histograms
+    if chart_type == "Histogram":
+        # Update histogram bar hover
         for trace in fig.data:
             if trace.type == "histogram":
                 trace.hovertemplate = (
                     f"{clean_label(hist_col)}: %{{x}}<br>Count: %{{y}}<extra></extra>"
                 )
-            else:
-                # Let Plotly use defaults for marginal box
-                trace.hovertemplate = None
-
+        # Update box plot hover in marginal if present and not showing gender split
+        if not show_gender_split:
+            # When NOT comparing genders, manually set hover for box trace
+            for trace in fig.data:
+                if trace.type == "box":
+                    # Override the box plot's internal hover formatting
+                    trace.hoverinfo = "x"  # Show only x value
+                    trace.hoveron = "boxes"  # Only show hover on boxes, not points
+        else:
+            # When comparing genders, keep default behavior
+            pass
     st.plotly_chart(fig, use_container_width=True)
 
 # Risk Factors page
