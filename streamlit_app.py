@@ -977,6 +977,10 @@ elif page == "Geographic Patterns":
             height=500,
             xaxis_tickangle=-45,
         )
+        fig.update_traces(
+            hovertemplate=("State: %{x}<br>Difference: %{y:.2f} days<extra></extra>")
+        )
+
         st.plotly_chart(fig, use_container_width=True)
 
     else:
@@ -1002,7 +1006,13 @@ elif page == "Geographic Patterns":
                 color_continuous_scale="Reds",
                 text="mean",
             )
-            fig.update_traces(texttemplate="%{text:.1f} days", textposition="outside")
+            # customize text and hover info for clarity
+            fig.update_traces(
+                texttemplate="%{x:.2f} days",
+                textposition="outside",
+                # custom hover
+                hovertemplate="State: %{y}<br>Avg Days: %{x:.2f}<extra></extra>",
+            )
             fig.update_layout(height=450, showlegend=False)
             st.plotly_chart(fig, use_container_width=True)
 
@@ -1019,7 +1029,13 @@ elif page == "Geographic Patterns":
                 color_continuous_scale="Greens_r",
                 text="mean",
             )
-            fig.update_traces(texttemplate="%{text:.1f} days", textposition="outside")
+            # customize text and hover info for clarity
+            fig.update_traces(
+                texttemplate="%{x:.2f} days",
+                textposition="outside",
+                # custom hover
+                hovertemplate="State: %{y}<br>Avg Days: %{x:.2f}<extra></extra>",
+            )
             fig.update_layout(height=450, showlegend=False)
             st.plotly_chart(fig, use_container_width=True)
 
@@ -1207,7 +1223,7 @@ elif page == "🔍 Interactive Explorer":
             category_order = {"Income_Group": INCOME_ORDER}
         elif x_var == "Emotional_Support":
             category_order = {"Emotional_Support": SUPPORT_ORDER}
-
+        # Create grouped bar chart if gender split is selected
         if show_gender_split:
             grouped = df_filtered.groupby([x_var, "Gender"])[y_var].mean().reset_index()
             fig = px.bar(
