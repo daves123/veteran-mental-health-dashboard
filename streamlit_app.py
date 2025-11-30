@@ -338,7 +338,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    st.markdown("### 🔧 Additional Filters")
+    st.markdown("###  Additional Filters")
 
     # Apply gender filter first
     if gender_filter == "Female Veterans Only":
