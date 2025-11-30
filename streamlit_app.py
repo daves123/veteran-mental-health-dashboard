@@ -1067,15 +1067,24 @@ elif page == "🔍 Interactive Explorer":
         x_var = [k for k, v in categorical_vars_display.items() if v == x_var_display][
             0
         ]
-
+    # Y-Axis variable selection
     with col3:
-        y_vars_display = {
-            "Mental_Health_Days_Clean": "Mental Health Days",
-            "Physical_Health_Days_Clean": "Physical Health Days",
-        }
-        y_var_display = st.selectbox("Y-Axis Variable", list(y_vars_display.values()))
-        # Map back to actual column name
-        y_var = [k for k, v in y_vars_display.items() if v == y_var_display][0]
+        # Hide Y-Axis dropdown when Histogram is selected
+        if chart_type != "Histogram":
+            # Normal Y-axis dropdown for Box, Violin, Bar charts
+            y_vars_display = {
+                "Mental_Health_Days_Clean": "Mental Health Days",
+                "Physical_Health_Days_Clean": "Physical Health Days",
+            }
+
+            y_var_display = st.selectbox(
+                "Y-Axis Variable", list(y_vars_display.values())
+            )
+            y_var = [k for k, v in y_vars_display.items() if v == y_var_display][0]
+
+        else:
+            # Histogram does not use y_var → set default (unused)
+            y_var = "Mental_Health_Days_Clean"
 
     # Add gender overlay option
     if gender_filter in ["All Veterans", "Compare Genders"]:
@@ -1143,6 +1152,7 @@ elif page == "🔍 Interactive Explorer":
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"}
                 if show_gender_split
                 else None,
+                category_orders=category_order,
             )
 
     elif chart_type == "Violin Plot":
@@ -1234,9 +1244,24 @@ elif page == "🔍 Interactive Explorer":
             )
     # Create Histogram with optional gender split
     else:
+        # For the histogram we use the selected X variable
+        hist_col = x_var
+        # Optional: category ordering for ordinal variables
+        category_order = None
+        if hist_col == "Age_Group":
+            category_order = {"Age_Group": AGE_GROUP_ORDER}
+        elif hist_col == "General_Health":
+            category_order = {"General_Health": HEALTH_ORDER}
+        elif hist_col == "Education":
+            category_order = {"Education": EDUCATION_ORDER}
+        elif hist_col == "Income_Group":
+            category_order = {"Income_Group": INCOME_ORDER}
+        elif hist_col == "Emotional_Support":
+            category_order = {"Emotional_Support": SUPPORT_ORDER}
+
         fig = px.histogram(
-            df_filtered.dropna(subset=[y_var]),
-            x=y_var,
+            df_filtered.dropna(subset=[hist_col]),
+            x=hist_col,
             color="Gender" if show_gender_split else None,
             marginal="box",
             barmode="overlay" if show_gender_split else None,
@@ -1244,29 +1269,29 @@ elif page == "🔍 Interactive Explorer":
             color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"}
             if show_gender_split
             else None,
-            title=f"Distribution of {clean_label(y_var)}",
+            title=f"Distribution of {clean_label(hist_col)}",
+            # enforce sorting like other charts
+            category_orders=category_order,
         )
 
-    # Update labels to remove underscores in axes and hover
-    fig.update_layout(
-        xaxis_title=clean_label(x_var)
-        if chart_type != "Histogram"
-        else clean_label(y_var),
-        yaxis_title=clean_label(y_var) if chart_type != "Histogram" else "Count",
-        height=600,
-        hovermode="closest",
-    )
-
-    # Update hover template to show clean labels
-    fig.update_traces(
-        hovertemplate="<br>".join(
-            [
-                f"{clean_label(x_var if chart_type != 'Histogram' else y_var)}: %{{x}}",
-                f"{clean_label(y_var) if chart_type != 'Histogram' else 'Count'}: %{{y:.2f}}",
-                "<extra></extra>",
-            ]
+    if chart_type == "Histogram":
+        # Histogram: x = category/value (hist_col), y = count
+        fig.update_layout(
+            xaxis_title=clean_label(hist_col),
+            yaxis_title="Count",
+            height=600,
+            hovermode="closest",
         )
-    )
+
+        # Only customize hover for histogram bars, leave marginal box alone
+        for trace in fig.data:
+            if trace.type == "histogram":
+                trace.hovertemplate = (
+                    f"{clean_label(hist_col)}: %{{x}}<br>Count: %{{y}}<extra></extra>"
+                )
+            else:
+                # Let Plotly use defaults for marginal box
+                trace.hovertemplate = None
 
     st.plotly_chart(fig, use_container_width=True)
 
