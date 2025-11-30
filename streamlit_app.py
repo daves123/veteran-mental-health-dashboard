@@ -700,10 +700,15 @@ if page == "Executive Overview":
                 line_dash="dash",
                 line_color="red",
                 annotation_text=f"Mean: {mean_val:.1f}",
+                annotation_position="top left",
             )
 
         fig.add_vline(
-            x=14, line_dash="dot", line_color="orange", annotation_text="CDC Threshold"
+            x=14,
+            line_dash="dot",
+            line_color="orange",
+            annotation_text="CDC Threshold",
+            annotation_position="top right",
         )
         fig.update_layout(height=400)
         st.plotly_chart(fig, use_container_width=True)
