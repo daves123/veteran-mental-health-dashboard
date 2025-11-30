@@ -185,6 +185,8 @@ INCOME_GROUPS = {
     7: "Unknown",
     9: "Refused",
 }
+# Income ordering for charts
+INCOME_ORDER = ["<$15k", "$15-25k", "$25-35k", "$35-50k", "$50-75k", ">$75k"]
 
 EMPLOYMENT_STATUS = {
     1: "Employed",
@@ -218,6 +220,17 @@ EDUCATION_LEVELS = {
     9: "Refused",
 }
 
+# Education ordering for charts
+EDUCATION_ORDER = [
+    "Never attended",
+    "Elementary",
+    "Some HS",
+    "HS Graduate",
+    "Some College",
+    "College Graduate",
+]
+
+# Health status mapping
 HEALTH_STATUS = {
     1: "Excellent",
     2: "Very Good",
@@ -227,7 +240,10 @@ HEALTH_STATUS = {
     7: "Don't know",
     9: "Refused",
 }
+# Health status ordering for charts
+HEALTH_ORDER = ["Excellent", "Very Good", "Good", "Fair", "Poor"]
 
+# Emotional support frequency mapping
 SUPPORT_FREQUENCY = {
     1: "Always",
     2: "Usually",
@@ -236,6 +252,8 @@ SUPPORT_FREQUENCY = {
     5: "Never",
     9: "Refused",
 }
+# Support frequency ordering for charts
+SUPPORT_ORDER = ["Always", "Usually", "Sometimes", "Rarely", "Never"]
 
 LIFE_SATISFACTION = {
     1: "Very Satisfied",
@@ -1091,6 +1109,17 @@ elif page == "🔍 Interactive Explorer":
 
     # Create visualization
     if chart_type == "Box Plot":
+        category_order = None
+        if x_var == "Age_Group":
+            category_order = {"Age_Group": AGE_GROUP_ORDER}
+        elif x_var == "General_Health":
+            category_order = {"General_Health": HEALTH_ORDER}
+        elif x_var == "Education":
+            category_order = {"Education": EDUCATION_ORDER}
+        elif x_var == "Income_Group":
+            category_order = {"Income_Group": INCOME_ORDER}
+        elif x_var == "Emotional_Support":
+            category_order = {"Emotional_Support": SUPPORT_ORDER}
         # Use Age_Group colors if that's the x variable, otherwise use gender split
         if x_var == "Age_Group" and not show_gender_split:
             fig = px.box(
@@ -1117,6 +1146,17 @@ elif page == "🔍 Interactive Explorer":
             )
 
     elif chart_type == "Violin Plot":
+        category_order = None
+        if x_var == "Age_Group":
+            category_order = {"Age_Group": AGE_GROUP_ORDER}
+        elif x_var == "General_Health":
+            category_order = {"General_Health": HEALTH_ORDER}
+        elif x_var == "Education":
+            category_order = {"Education": EDUCATION_ORDER}
+        elif x_var == "Income_Group":
+            category_order = {"Income_Group": INCOME_ORDER}
+        elif x_var == "Emotional_Support":
+            category_order = {"Emotional_Support": SUPPORT_ORDER}
         # Use Age_Group colors if that's the x variable, otherwise use gender split
         if x_var == "Age_Group" and not show_gender_split:
             fig = px.violin(
@@ -1127,8 +1167,9 @@ elif page == "🔍 Interactive Explorer":
                 color_discrete_map=age_colors,
                 box=True,
                 title=f"{clean_label(y_var)} Distribution by {clean_label(x_var)}",
-                category_orders={"Age_Group": AGE_GROUP_ORDER},
+                category_orders=category_order,
             )
+        # Add mean line
         else:
             fig = px.violin(
                 df_filtered.dropna(subset=[x_var, y_var]),
@@ -1140,9 +1181,23 @@ elif page == "🔍 Interactive Explorer":
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"}
                 if show_gender_split
                 else None,
+                category_orders=category_order,
             )
-
+    # Create Bar Chart
     elif chart_type == "Bar Chart":
+        # Determine category ordering for all ordinal variables
+        category_order = None
+        if x_var == "Age_Group":
+            category_order = {"Age_Group": AGE_GROUP_ORDER}
+        elif x_var == "General_Health":
+            category_order = {"General_Health": HEALTH_ORDER}
+        elif x_var == "Education":
+            category_order = {"Education": EDUCATION_ORDER}
+        elif x_var == "Income_Group":
+            category_order = {"Income_Group": INCOME_ORDER}
+        elif x_var == "Emotional_Support":
+            category_order = {"Emotional_Support": SUPPORT_ORDER}
+
         if show_gender_split:
             grouped = df_filtered.groupby([x_var, "Gender"])[y_var].mean().reset_index()
             fig = px.bar(
@@ -1153,8 +1208,9 @@ elif page == "🔍 Interactive Explorer":
                 barmode="group",
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
-                category_orders={"Age_Group": AGE_GROUP_ORDER},
+                category_orders=category_order,
             )
+        # Age_Group with colors
         elif x_var == "Age_Group":
             grouped = df_filtered.groupby(x_var)[y_var].mean().reset_index()
             fig = px.bar(
@@ -1164,8 +1220,9 @@ elif page == "🔍 Interactive Explorer":
                 color=x_var,
                 color_discrete_map=age_colors,
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
-                category_orders={"Age_Group": AGE_GROUP_ORDER},
+                category_orders=category_order,
             )
+        # Default bar chart
         else:
             grouped = df_filtered.groupby(x_var)[y_var].mean().reset_index()
             fig = px.bar(
@@ -1173,9 +1230,10 @@ elif page == "🔍 Interactive Explorer":
                 x=x_var,
                 y=y_var,
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
+                category_orders=category_order,
             )
-
-    else:  # Histogram
+    # Create Histogram with optional gender split
+    else:
         fig = px.histogram(
             df_filtered.dropna(subset=[y_var]),
             x=y_var,
@@ -1204,7 +1262,7 @@ elif page == "🔍 Interactive Explorer":
         hovertemplate="<br>".join(
             [
                 f"{clean_label(x_var if chart_type != 'Histogram' else y_var)}: %{{x}}",
-                f"{clean_label(y_var) if chart_type != 'Histogram' else 'Count'}: %{{y}}",
+                f"{clean_label(y_var) if chart_type != 'Histogram' else 'Count'}: %{{y:.2f}}",
                 "<extra></extra>",
             ]
         )
@@ -1212,6 +1270,7 @@ elif page == "🔍 Interactive Explorer":
 
     st.plotly_chart(fig, use_container_width=True)
 
+# Risk Factors page
 elif page == "Risk Factors":
     st.markdown(
         '<div class="sub-header">Risk Factor Analysis & Predictive Features</div>',
