@@ -762,7 +762,7 @@ elif page == "Mental Health Analysis":
     )
 
     # Socioeconomic analysis
-    st.markdown("### 💰 Socioeconomic Impact")
+    st.markdown("### Socioeconomic Impact")
 
     income_order = ["<$15k", "$15-25k", "$25-35k", "$35-50k", "$50-75k", ">$75k"]
 
