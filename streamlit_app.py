@@ -712,8 +712,8 @@ if page == "Executive Overview":
                     "Mental_Health_Days_Clean": "Mental Health Days",
                     "Gender": "Gender",
                 },
-                barmode="overlay",
-                opacity=0.7,
+                barmode="stack",
+                # opacity=0.1,
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
             )
         else:
