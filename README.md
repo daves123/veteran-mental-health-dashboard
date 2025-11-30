@@ -136,6 +136,6 @@ streamlit run streamlit_app.py --server.port 8502
 
 ## License
 
-This project is created for educational purposes as part of CS 7510 coursework.
+This project is created for educational purposes.
 
 ---
