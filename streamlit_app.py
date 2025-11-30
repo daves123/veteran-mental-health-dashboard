@@ -1290,13 +1290,13 @@ elif page == "🔍 Interactive Explorer":
             x=hist_col,
             color="Gender" if show_gender_split else None,
             marginal="box",
-            barmode="overlay" if show_gender_split else None,
-            opacity=0.7 if show_gender_split else 1,
+            barmode="group" if show_gender_split else None,
+            # no transparency needed for grouped bars
+            opacity=1 if show_gender_split else 1,
             color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"}
             if show_gender_split
             else None,
             title=f"Distribution of {clean_label(hist_col)}",
-            # enforce sorting like other charts
             category_orders=category_order,
         )
     # Apply layout and hover customization AFTER all chart types
