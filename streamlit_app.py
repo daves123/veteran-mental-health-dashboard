@@ -159,7 +159,22 @@ AGE_GROUPS = {
     13: "80+",
     14: "80+",
 }
-
+# Age group ordering for charts (youngest to oldest)
+AGE_GROUP_ORDER = [
+    "18-24",
+    "25-29",
+    "30-34",
+    "35-39",
+    "40-44",
+    "45-49",
+    "50-54",
+    "55-59",
+    "60-64",
+    "65-69",
+    "70-74",
+    "75-79",
+    "80+",
+]
 INCOME_GROUPS = {
     1: "<$15k",
     2: "$15-25k",
@@ -736,6 +751,7 @@ if page == "Executive Overview":
                 },
                 markers=True,
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
         else:
             age_stats = (
@@ -755,6 +771,7 @@ if page == "Executive Overview":
                     "Mental_Health_Days_Clean": "Mental Health Days",
                 },
                 markers=True,
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
 
         fig.update_layout(height=400)
@@ -1084,6 +1101,7 @@ elif page == "🔍 Interactive Explorer":
                 color_discrete_map=age_colors,
                 points="outliers",
                 title=f"{clean_label(y_var)} by {clean_label(x_var)}",
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
         else:
             fig = px.box(
@@ -1109,6 +1127,7 @@ elif page == "🔍 Interactive Explorer":
                 color_discrete_map=age_colors,
                 box=True,
                 title=f"{clean_label(y_var)} Distribution by {clean_label(x_var)}",
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
         else:
             fig = px.violin(
@@ -1134,6 +1153,7 @@ elif page == "🔍 Interactive Explorer":
                 barmode="group",
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
         elif x_var == "Age_Group":
             grouped = df_filtered.groupby(x_var)[y_var].mean().reset_index()
@@ -1144,6 +1164,7 @@ elif page == "🔍 Interactive Explorer":
                 color=x_var,
                 color_discrete_map=age_colors,
                 title=f"Average {clean_label(y_var)} by {clean_label(x_var)}",
+                category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
         else:
             grouped = df_filtered.groupby(x_var)[y_var].mean().reset_index()
