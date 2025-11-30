@@ -1,7 +1,6 @@
 """
 Female Veterans Mental Health Analysis - Enhanced Dashboard with Gender Filtering
 Phase 2 Demonstration App
-Author: Dave Singh
 Dataset: BRFSS 2024 (CDC)
 """
 
