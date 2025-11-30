@@ -433,8 +433,7 @@ with st.sidebar:
         """)
 
     st.markdown("""
-    **Author:** Dave Singh  
-    **Course:** CS 7510  
+    **Author:** Dave S
     **Semester:** Fall 2025
     """)
 
@@ -1689,7 +1688,7 @@ st.markdown(
 <div style='text-align: center; color: #666; padding: 2rem 0;'>
     <p><strong>Real CDC Data</strong> | {len(df_all):,} Total Veterans 
     ({len(df_all[df_all["Gender"] == "Female"]):,} Female | {len(df_all[df_all["Gender"] == "Male"]):,} Male)
-    <strong>CS 7510 - Fall 2025</strong> | Author: <strong>Dave Singh</strong></p>
+    <strong>Fall 2025</strong> | Author: <strong>Dave S</strong></p>
     <p style='margin-top: 1rem; font-size: 0.9rem;'>
         Crisis Support: <strong>Veterans Crisis Line: 1-800-273-8255 (Press 1)</strong>
     </p>
