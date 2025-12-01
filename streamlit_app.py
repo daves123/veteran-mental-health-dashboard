@@ -713,7 +713,6 @@ if page == "Executive Overview":
                     "Gender": "Gender",
                 },
                 barmode="stack",
-                # opacity=0.1,
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
             )
         else:
@@ -771,6 +770,12 @@ if page == "Executive Overview":
                 color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
                 category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
+            # Customize hover template for clarity
+            fig.update_traces(
+                hovertemplate="Gender: %{fullData.name}<br>"
+                "Age Group: %{x}<br>"
+                "Mental Health Days: %{y:.2f}<extra></extra>"
+            )
         else:
             age_stats = (
                 df_filtered.groupby("Age_Group")["Mental_Health_Days_Clean"]
@@ -791,7 +796,11 @@ if page == "Executive Overview":
                 markers=True,
                 category_orders={"Age_Group": AGE_GROUP_ORDER},
             )
-
+            # Customize hover template for clarity rounding to 2 decimals
+            fig.update_traces(
+                hovertemplate="Age Group: %{x}<br>"
+                "Mental Health Days: %{y:.2f}<extra></extra>"
+            )
         fig.update_layout(height=400)
         st.plotly_chart(fig, use_container_width=True)
 
