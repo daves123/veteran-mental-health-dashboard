@@ -405,22 +405,22 @@ with st.sidebar:
 
     if gender_filter == "Female Veterans Only":
         st.markdown(
-            '<span class="gender-badge female-badge">👩 Female Only</span>',
+            '<span class="gender-badge female-badge">👩‍✈️ Female Only</span>',
             unsafe_allow_html=True,
         )
     elif gender_filter == "Male Veterans Only":
         st.markdown(
-            '<span class="gender-badge male-badge">👨 Male Only</span>',
+            '<span class="gender-badge male-badge">👨‍✈️ Male Only</span>',
             unsafe_allow_html=True,
         )
     elif gender_filter == "All Veterans":
         st.markdown(
-            '<span class="gender-badge all-badge">👥 All Veterans</span>',
+            '<span class="gender-badge all-badge">🎖️ All Veterans</span>',
             unsafe_allow_html=True,
         )
     else:
         st.markdown(
-            '<span class="gender-badge female-badge">👩 Female</span> <span class="gender-badge male-badge">👨 Male</span>',
+            '<span class="gender-badge female-badge">👩‍✈️ Female</span> <span class="gender-badge male-badge">👨‍✈️ Male</span>',
             unsafe_allow_html=True,
         )
 
@@ -543,17 +543,17 @@ if page == "Executive Overview":
     # Show gender badge
     if gender_filter == "Female Veterans Only":
         st.markdown(
-            "**Viewing:** <span class='gender-badge female-badge'>👩 Female Veterans Only</span>",
+            "**Viewing:** <span class='gender-badge female-badge'>👩‍✈️ Female Veterans Only</span>",
             unsafe_allow_html=True,
         )
     elif gender_filter == "Male Veterans Only":
         st.markdown(
-            "**Viewing:** <span class='gender-badge male-badge'>👨 Male Veterans Only</span>",
+            "**Viewing:** <span class='gender-badge male-badge'>👨‍✈️ Male Veterans Only</span>",
             unsafe_allow_html=True,
         )
     elif gender_filter == "Compare Genders":
         st.markdown(
-            "**Viewing:** <span class='gender-badge female-badge'>👩 Female</span> vs <span class='gender-badge male-badge'>👨 Male</span>",
+            "**Viewing:** <span class='gender-badge female-badge'>👩‍✈️ Female</span> vs <span class='gender-badge male-badge'>👨‍✈️ Male</span>",
             unsafe_allow_html=True,
         )
 
