@@ -1461,6 +1461,10 @@ elif page == "Risk Factors":
         )
 
     st.success("""
+    **What The Score Means:**
+    The importance score reflects how much each feature contributes to the model's predictions.
+    A higher score indicates a greater impact on predicting frequent mental distress among veterans.
+
     **Key Insight:** Physical health is the strongest predictor of mental health outcomes, 
     followed by depression diagnosis and social support - highlighting the mind-body connection
     and the critical role of social factors in veteran mental health.
