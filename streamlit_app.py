@@ -1,5 +1,5 @@
 """
-Female Veterans Mental Health Analysis - Enhanced Dashboard with Gender Filtering
+Veterans Mental Health Disparity Analysis - Enhanced Dashboard with Gender Filtering
 Phase 2 Demonstration App
 Dataset: BRFSS 2024 (CDC)
 """
@@ -13,7 +13,7 @@ from plotly.subplots import make_subplots
 
 # Page configuration
 st.set_page_config(
-    page_title="Veterans Mental Health Analysis - BRFSS 2024",
+    page_title="Veterans Mental Health Disparity Analysis",
     page_icon="🎖️",
     layout="wide",
     initial_sidebar_state="expanded",
@@ -45,6 +45,10 @@ st.markdown(
         padding: 1rem;
         border-radius: 5px;
         margin: 1rem 0;
+        color: #1a1a1a !important;
+    }
+    .insight-box h4, .insight-box p, .insight-box strong {
+        color: #1a1a1a !important;
     }
     .warning-box {
         background-color: #fff3cd;
@@ -52,6 +56,10 @@ st.markdown(
         padding: 1rem;
         border-radius: 5px;
         margin: 1rem 0;
+        color: #1a1a1a !important;
+    }
+    .warning-box h4, .warning-box p, .warning-box strong {
+        color: #1a1a1a !important;
     }
     .success-box {
         background-color: #d4edda;
@@ -59,6 +67,10 @@ st.markdown(
         padding: 1rem;
         border-radius: 5px;
         margin: 1rem 0;
+        color: #1a1a1a !important;
+    }
+    .success-box h4, .success-box p, .success-box strong {
+        color: #1a1a1a !important;
     }
     .gender-badge {
         display: inline-block;
@@ -333,7 +345,7 @@ if df_all is None:
 
 # Title
 st.markdown(
-    '<div class="main-header">🎖️ Veterans Mental Health Analysis - BRFSS 2024</div>',
+    '<div class="main-header">🎖️ Veterans Mental Health Disparity Analysis</div>',
     unsafe_allow_html=True,
 )
 
