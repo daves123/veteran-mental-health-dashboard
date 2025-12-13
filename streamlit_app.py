@@ -568,6 +568,14 @@ with st.sidebar:
         **Total: 53 geographic areas (49 states + 4 territories)**
         """)
 
+    # Data refresh button to clear cache if needed.
+    # Note: This button is for manually clearing the cache and will be remove once
+    # streamlit updates with the new data.
+    st.markdown("---")
+    if st.button("Force Data Refresh (Clears Cache)"):
+        st.cache_data.clear()
+        st.rerun()
+        st.success("Cache cleared! Rerunning app...")
     st.markdown("""
     **Author:** Dave S
     **Semester:** Fall 2025
