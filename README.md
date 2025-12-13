@@ -8,7 +8,7 @@ This interactive dashboard presents findings from the analysis of mental health 
 **Semester:** Fall 2025  
 **Dataset:** BRFSS 2024 (~6,000 female veterans)
 
-**Streamlit App:** [Veterans Mental Health Disparity Analysis](https://catalog.data.gov/dataset/ahrq-report-and-data-files-2023-pharmacological-and-nonpharmacological-treatments-for-post)
+**Streamlit App:** [Veterans Mental Health Disparity Analysis](https://veteran-mental-health-dashboard.streamlit.app/)
 
 ## Features
 
