@@ -571,11 +571,12 @@ with st.sidebar:
     # Data refresh button to clear cache if needed.
     # Note: This button is for manually clearing the cache and will be remove once
     # streamlit updates with the new data.
-    st.markdown("---")
-    if st.button("Force Data Refresh (Clears Cache)"):
-        st.cache_data.clear()
-        st.rerun()
-        st.success("Cache cleared! Rerunning app...")
+    # Ucomment the following lines to enable the refresh button.
+    # st.markdown("---")
+    # if st.button("Force Data Refresh (Clears Cache)"):
+    #     st.cache_data.clear()
+    #     st.rerun()
+    #     st.success("Cache cleared! Rerunning app...")
     st.markdown("""
     **Author:** Dave S
     **Semester:** Fall 2025
