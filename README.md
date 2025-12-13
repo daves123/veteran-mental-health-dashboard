@@ -1,7 +1,8 @@
 # Female Veterans Mental Health Analysis - Streamlit Dashboard
 
 ## Overview
-This interactive dashboard presents findings from the analysis of mental health disparities among female veterans using BRFSS 2024 data.
+This interactive dashboard presents findings from the analysis of mental health disparities 
+among female & male veterans using BRFSS 2024 data.
 
 **Author:** Dave Singh  
 **Course:** Communication and Presentation for Data Science  
