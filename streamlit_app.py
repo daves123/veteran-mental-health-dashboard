@@ -578,7 +578,7 @@ with st.sidebar:
     #     st.rerun()
     #     st.success("Cache cleared! Rerunning app...")
     st.markdown("""
-    **Author:** Dave S
+    **Author:** Dave S | dsingh41@oldwestbury.edu
     **Semester:** Fall 2025
     """)
 
