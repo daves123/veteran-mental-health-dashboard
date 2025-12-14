@@ -436,7 +436,7 @@ effect_sizes = calculate_effect_sizes(df_all)
 
 # Title
 st.markdown(
-    '<div class="main-header">🎖️ Veterans Mental Health Disparity Analysis</div>',
+    '<div class="main-header">🎖️ Beyond The Uniform:<br>Veterans Mental Health Disparity Analysis</div>',
     unsafe_allow_html=True,
 )
 
