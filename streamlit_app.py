@@ -572,11 +572,11 @@ with st.sidebar:
     # Note: This button is for manually clearing the cache and will be remove once
     # streamlit updates with the new data.
     # Ucomment the following lines to enable the refresh button.
-    # st.markdown("---")
-    # if st.button("Force Data Refresh (Clears Cache)"):
-    #     st.cache_data.clear()
-    #     st.rerun()
-    #     st.success("Cache cleared! Rerunning app...")
+    st.markdown("---")
+    if st.button("Force Data Refresh (Clears Cache)"):
+        st.cache_data.clear()
+        st.rerun()
+        st.success("Cache cleared! Rerunning app...")
     st.markdown("""
     **Author:** Dave S | dsingh41@oldwestbury.edu
     **Semester:** Fall 2025
@@ -1429,6 +1429,14 @@ elif page == "🔍 Interactive Explorer":
             height=600,
             hovermode="closest",
         )
+    else:
+        # For Box Plot, Violin Plot, and Bar Chart - clean the axis labels
+        fig.update_layout(
+            xaxis_title=clean_label(x_var),
+            yaxis_title=clean_label(y_var),
+            height=600,
+        )
+
     # Apply hover customization for histograms
     if chart_type == "Histogram":
         # Update histogram bar hover
@@ -1448,91 +1456,98 @@ elif page == "🔍 Interactive Explorer":
         else:
             # When comparing genders, keep default behavior
             pass
-    st.plotly_chart(fig, use_container_width=True)
 
-# Risk Factors page
+    st.plotly_chart(fig, use_container_width=True)
+# Risk Factors page - UPDATED WITH ACTUAL VALUES
 elif page == "Risk Factors":
     st.markdown(
         '<div class="sub-header">Risk Factor Analysis & Predictive Features</div>',
         unsafe_allow_html=True,
     )
 
-    # XGBoost Feature Importance - PROPERLY SORTED!
+    # XGBoost Feature Importance - UPDATED WITH ACTUAL VALUES
     st.markdown("### Top Predictive Features (XGBoost Model)")
-
     st.markdown("""
     Features ranked by importance score from XGBoost model predicting frequent mental distress (≥14 days/month).
-    The model achieved **87% accuracy** with the features listed below.
+    The model achieved **78.9% accuracy with 0.81 AUC-ROC** on 21,871 veterans with complete emotional support data.
+    
+    **Note:** Emotional support emerged as the **strongest modifiable factor**, ranking substantially higher than 
+    economic factors (income 2.9%, employment 4.5%), demonstrating that social connections matter more than money 
+    for veteran mental health.
     """)
 
+    # CORRECTED FEATURE IMPORTANCE - FROM ACTUAL ANALYSIS
     features = [
-        "Poor Physical Health Days",
-        "Depression Diagnosis",
-        "Social Support Score",
-        "Income Level",
-        "Employment Status",
+        "Physical Health Days",
+        "Emotional Support Availability",
         "General Health Rating",
-        "Chronic Conditions Count",
-        "Health Insurance",
         "Age Group",
-        "Healthcare Access Score",
-        "Marital Status",
-        "Education Level",
+        "Gender",
         "Cost Barrier to Care",
-        "PTSD Diagnosis",
-        "VA Healthcare Usage",
+        "Employment Status",
+        "Alcohol Use",
+        "Race/Ethnicity",
+        "Exercise",
+        "Smoking Status",
+        "Marital Status",
+        "BMI Category",
+        "Education Level",
+        "Income Level",
+        "Health Insurance Coverage",
     ]
+    # Corrected importance scores - FROM ACTUAL ANALYSIS
     importance = [
-        0.18,
-        0.15,
-        0.13,
-        0.11,
-        0.09,
-        0.08,
-        0.07,
-        0.06,
-        0.05,
-        0.04,
-        0.03,
-        0.02,
-        0.02,
-        0.015,
-        0.015,
+        0.247,  # 24.7% - Physical Health Days
+        0.145,  # 14.5% - Emotional Support (HIGHEST MODIFIABLE)
+        0.083,  # 8.3%  - General Health
+        0.083,  # 8.3%  - Age Group
+        0.049,  # 4.9%  - Gender
+        0.049,  # 4.9%  - Cost Barrier
+        0.045,  # 4.5%  - Employment
+        0.040,  # 4.0%  - Alcohol Use
+        0.038,  # 3.8%  - Race/Ethnicity
+        0.038,  # 3.8%  - Exercise
+        0.036,  # 3.6%  - Smoking
+        0.033,  # 3.3%  - Marital Status
+        0.031,  # 3.1%  - BMI
+        0.030,  # 3.0%  - Education
+        0.029,  # 2.9%  - Income
+        0.024,  # 2.4%  - Health Insurance
     ]
 
     categories = [
         "Physical Health",
-        "Mental Health",
-        "Social",
-        "Economic",
-        "Economic",
+        "Social Factors",  # Changed from Mental Health
         "Physical Health",
+        "Demographics",
+        "Demographics",
+        "Healthcare Access",
+        "Economic",
+        "Behavioral",
+        "Demographics",
+        "Behavioral",
+        "Behavioral",
+        "Social Factors",
         "Physical Health",
-        "Healthcare",
         "Demographics",
-        "Healthcare",
-        "Social",
-        "Demographics",
-        "Healthcare",
-        "Mental Health",
-        "Healthcare",
+        "Economic",
+        "Healthcare Access",
     ]
 
     importance_df = pd.DataFrame(
         {"Feature": features, "Importance": importance, "Category": categories}
     )
 
-    # CRITICAL: Sort by importance with ascending=True for horizontal bar
-    # This makes the HIGHEST importance at the TOP of the chart
+    # Sort by importance with ascending=True for horizontal bar
     importance_df = importance_df.sort_values("Importance", ascending=True)
-
+    # Create bar chart for feature importance
     fig = px.bar(
         importance_df,
         x="Importance",
         y="Feature",
         orientation="h",
         color="Category",
-        title="Feature Importance Ranking (Highest at Top)",
+        title="XGBoost Feature Importance - Final Model (n=21,871 veterans)",
         labels={"Importance": "Importance Score", "Feature": "Predictive Feature"},
         text="Importance",
         color_discrete_sequence=px.colors.qualitative.Set2,
@@ -1541,9 +1556,12 @@ elif page == "Risk Factors":
     fig.update_layout(
         height=600,
         showlegend=True,
-        yaxis={"categoryorder": "total ascending"},  # Ensures proper ordering
+        yaxis={"categoryorder": "total ascending"},
     )
     st.plotly_chart(fig, use_container_width=True)
+
+    # Show top 5 features clearly
+    st.markdown("### Top 5 Predictive Features")
 
     # Show top 5 features clearly
     col1, col2, col3 = st.columns(3)
@@ -1572,14 +1590,60 @@ elif page == "Risk Factors":
             f"5. {top_5.iloc[4]['Feature']} ({top_5.iloc[4]['Importance']:.3f})"
         )
 
-    st.success("""
-    **What The Score Means:**
-    The importance score reflects how much each feature contributes to the model's predictions.
-    A higher score indicates a greater impact on predicting frequent mental distress among veterans.
+    # Key insights box - UPDATED WITH ACTUAL VALUES
+    st.markdown(
+        """
+    <div class="success-box">
+    <h4>Critical Insights:</h4>
+    <ul>
+    <li><strong>Emotional Support (14.5%)</strong> is the <strong>#1 MODIFIABLE</strong> protective factor</li>
+    <li><strong>Social connections matter MORE than money:</strong> Emotional Support (14.5%) ranks 
+        5.0× higher than income (2.9%) and 3.2× higher than employment (4.5%)</li>
+    <li><strong>Physical-mental health connection:</strong> Physical health days (24.7%) is the strongest 
+        overall predictor, highlighting the bidirectional relationship</li>
+    <li><strong>Multi-method validation:</strong> Machine learning confirms descriptive findings of 
+        2.8× protective effect of emotional support</li>
+    <li><strong>Model performance:</strong> 78.9% accuracy with 0.81 AUC-ROC indicates good discrimination 
+        for mental health prediction using cross-sectional data</li>
+    </ul>
+    </div>
+    """,
+        unsafe_allow_html=True,
+    )
 
-    **Key Insight:** Physical health is the strongest predictor of mental health outcomes, 
-    followed by depression diagnosis and social support - highlighting the mind-body connection
-    and the critical role of social factors in veteran mental health.
+    # Comparison to economic factors
+    st.markdown("### Social Connections vs Economic Factors")
+
+    comparison_data = pd.DataFrame(
+        {
+            "Factor": [
+                "Emotional Support",
+                "Employment Status",
+                "Income Level",
+                "Health Insurance",
+            ],
+            "Importance": [0.145, 0.045, 0.029, 0.024],
+            "Type": ["Social", "Economic", "Economic", "Economic"],
+        }
+    )
+
+    fig_comparison = px.bar(
+        comparison_data,
+        x="Factor",
+        y="Importance",
+        color="Type",
+        title="Social Support vs Economic Factors",
+        text="Importance",
+        color_discrete_map={"Social": "#2ca02c", "Economic": "#ff7f0e"},
+    )
+    fig_comparison.update_traces(texttemplate="%{text:.1%}", textposition="outside")
+    fig_comparison.update_layout(height=400, yaxis_title="Feature Importance")
+    st.plotly_chart(fig_comparison, use_container_width=True)
+
+    st.info("""
+    **Policy Implication:** Peer support programs may offer superior mental health return on investment 
+    compared to direct economic assistance programs. While economic stability remains important for overall 
+    wellbeing, social connections have the strongest direct impact on mental health outcomes.
     """)
 
 elif page == "Key Insights":
