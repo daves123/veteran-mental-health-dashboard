@@ -572,11 +572,11 @@ with st.sidebar:
     # Note: This button is for manually clearing the cache and will be remove once
     # streamlit updates with the new data.
     # Ucomment the following lines to enable the refresh button.
-    st.markdown("---")
-    if st.button("Force Data Refresh (Clears Cache)"):
-        st.cache_data.clear()
-        st.rerun()
-        st.success("Cache cleared! Rerunning app...")
+    # st.markdown("---")
+    # if st.button("Force Data Refresh (Clears Cache)"):
+    #     st.cache_data.clear()
+    #     st.rerun()
+    #     st.success("Cache cleared! Rerunning app...")
     st.markdown("""
     **Author:** Dave S | dsingh41@oldwestbury.edu
     **Semester:** Fall 2025
@@ -771,12 +771,13 @@ if page == "Executive Overview":
                 textposition="outside",
             )
         )
-
+        # Add ratio bars for ratios > 1 or < 1 for better visualization
         fig.update_layout(
             title="Key Metrics: Female vs Male Veterans",
             barmode="group",
             height=450,
             yaxis_title="Value",
+            margin=dict(t=80, b=50, l=50, r=50),
         )
         st.plotly_chart(fig, use_container_width=True)
 
