@@ -942,6 +942,11 @@ elif page == "Mental Health Analysis":
             y="Mental_Health_Days_Clean",
             color="Gender",
             title="Mental Health Days by Income Level (by Gender)",
+            labels={
+                "Income_Group": "Income Group",
+                "Mental_Health_Days_Clean": "Mental Health Days",  # Corrected label
+                "Gender": "Gender",
+            },
             barmode="group",
             category_orders={"Income_Group": income_order},
             color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
@@ -1002,6 +1007,11 @@ elif page == "Mental Health Analysis":
             y="Mental_Health_Days_Clean",
             color="Gender",
             title="Impact of Emotional Support (by Gender)",
+            labels={
+                "Emotional_Support": "Emotional Support",
+                "Mental_Health_Days_Clean": "Mental Health Days",
+                "Gender": "Gender",
+            },
             markers=True,
             category_orders={"Emotional_Support": support_order},
             color_discrete_map={"Female": "#ff7f0e", "Male": "#1f77b4"},
