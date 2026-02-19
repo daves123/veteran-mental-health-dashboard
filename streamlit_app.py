@@ -457,8 +457,12 @@ with st.sidebar:
         ],
         label_visibility="collapsed",
     )
-
+    st.sidebar.markdown("### RELATED APPS")
+    st.sidebar.markdown(
+        "[Veteran Mental Health Chatbot](https://veteran-mental-health-chatbot.streamlit.app/)"
+    )
     st.markdown("---")
+
     st.markdown("### PRIMARY FILTER")
 
     # GENDER FILTER - Most important
